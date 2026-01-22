@@ -2,6 +2,7 @@ import { db } from "@/db";
 import { videos } from "@/db/schema";
 import { mux } from "@/lib/mux";
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
+import { LampCeiling } from "lucide-react";
 
 export const videosRouter = createTRPCRouter({
   create: protectedProcedure.mutation(async ({ ctx }) => {
@@ -11,6 +12,11 @@ export const videosRouter = createTRPCRouter({
       new_asset_settings: {
         passthrough: userId,
         playback_policy: ["public"],
+        input: [
+          {
+            generated_subtitles: [{ language_code: "en", name: "English" }],
+          },
+        ],
       },
       cors_origin: "*",
     });
